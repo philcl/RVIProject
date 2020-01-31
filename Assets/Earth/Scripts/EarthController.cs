@@ -30,7 +30,7 @@ public class EarthController : MonoBehaviour
 		if (Input.GetButtonDown("gachetDroite"))
 		 {
 			posRightHandInitPosition = RightHand.transform.localPosition;
-			posEarthInitRotation = transform.rotation;
+			posEarthInitRotation = transform.localRotation;
 			//Manette regarder la position en x pour rotation en y
 			gachetDroite = true;
 			print("pos manette init = " + posRightHandInitPosition);
@@ -62,8 +62,11 @@ public class EarthController : MonoBehaviour
 			//Quaternion rotation1 = Quaternion.Euler(360.0f * gachetDroiteMvt.y, 0, 0.0f);
 			//Quaternion rotation2 = Quaternion.Euler(0, 360.0f * gachetDroiteMvt.x, 0.0f);
 			//transform.rotation = rotation2 * rotation1 * posEarthInitRotation;
+
 			Quaternion rotation = Quaternion.Euler(360.0f * gachetDroiteMvt.y, 360.0f * gachetDroiteMvt.x, 0.0f);
-			transform.rotation = rotation * Camera.main.transform.rotation * posEarthInitRotation;
+			rotation = Camera.main.transform.rotation * rotation;
+			transform.Rotate(rotation.eulerAngles);
+			//transform.rotation = posEarthInitRotation * rotation;
 
 		}
 
